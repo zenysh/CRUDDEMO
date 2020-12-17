@@ -2,10 +2,12 @@ package com.project.Crud.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.Crud.demo.exception.AlreadyExistException;
 import com.project.Crud.demo.exception.NotFoundException;
@@ -14,17 +16,19 @@ import com.project.Crud.demo.repository.CategoryRespository;
 import com.project.Crud.demo.request.CategoryCreation;
 import com.project.Crud.demo.response.CategoryResponse;
 
+@Service
 public class CategoryService {
 
 	@Autowired
 	CategoryRespository categoryrepo;
 
-	private Category getCategoryWithId(Long id) {
-		Category cat = categoryrepo.findByCategoryId(id);
-		if (cat == null)
-			throw new NotFoundException("No user found");
-		return cat;
-	}
+	//private Optional<Category> getCategoryWithId(Long id) {
+	//	Optional<Category> cat = categoryrepo.findById(id);
+	//	if (!cat.isPresent()) {
+	//		throw new NotFoundException("No user found");
+	//	}
+	//	return cat;
+	//}
 
 	@Transactional
 	public String CreateCategory(CategoryCreation CC) {
@@ -44,22 +48,25 @@ public class CategoryService {
 	}
 
 	@Transactional
-	public String deleteCategory(Long categoryid) {
-		Category category = categoryrepo.findByCategoryId(categoryid);
-		if (category == null) {
-			throw new NotFoundException("Category not Found to delete");
+	public Optional<Category> deletecategory(Long categoryid) {
+		Optional<Category> category = categoryrepo.findById(categoryid);
+		if (!category.isPresent()) {
+			throw new NotFoundException("No Category found");
 		}
 		try {
-			categoryrepo.delete(category);
+			categoryrepo.deleteById(categoryid);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-		return "Category delete";
+		return Optional.empty();
 	}
 
 	@Transactional
-	public String updateCategory(Long categoryid, CategoryCreation categorycreation) {
-		Category category = getCategoryWithId(categoryid);
+	public String updateCategory(String name, CategoryCreation categorycreation) {
+		Category category = categoryrepo.findByName(name);
+		if (category == null) {
+			throw new NotFoundException("No Category found to update");
+		}
 		try {
 			category.setName(categorycreation.getName());
 			category.setPicture(categorycreation.getPicture());

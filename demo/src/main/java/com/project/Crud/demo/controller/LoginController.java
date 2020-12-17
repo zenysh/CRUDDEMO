@@ -22,14 +22,14 @@ public class LoginController {
 	@Autowired
 	private LoginService loginservice;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> CreateLogin(@RequestHeader Long productid, @RequestBody LoginCreation logincreation) {
-		String login = loginservice.CreateUser(logincreation);
+	@RequestMapping(value ="/createuser",method = RequestMethod.POST)
+	public ResponseEntity<Object> CreateLogin(@RequestBody LoginCreation logincreation) {
+		String login = loginservice.CreateLogin(logincreation);
 		return new ResponseEntity<Object>(login, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "deletelogin/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteLogin(@PathVariable Long loginid) {
+	public ResponseEntity<Object> deleteLogin(@PathVariable(value = "id")  Long loginid) {
 		loginservice.deleteLogin(loginid);
 		return new ResponseEntity<Object>("Successfully Deleted", HttpStatus.OK);
 	}
@@ -40,9 +40,9 @@ public class LoginController {
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/editLogin/{loginid}", method = RequestMethod.PUT)
-	public ResponseEntity<Object> editUser(@RequestHeader Long loginid, @RequestBody LoginCreation Logincreation) {
-		loginservice.updateLogin(loginid, Logincreation);
+	@RequestMapping(value = "/editLogin", method = RequestMethod.PUT)
+	public ResponseEntity<Object> editUser(@RequestHeader String username, @RequestBody LoginCreation Logincreation) {
+		loginservice.updateLogin(username, Logincreation);
 		return new ResponseEntity<Object>("Successfully Edited", HttpStatus.OK);
 	}
 

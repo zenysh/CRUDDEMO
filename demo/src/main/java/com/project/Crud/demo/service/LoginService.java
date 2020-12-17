@@ -2,6 +2,7 @@ package com.project.Crud.demo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -21,16 +22,17 @@ public class LoginService {
 	@Autowired
 	LoginRepository loginrepo;
 
-	private Login getLoginWithId(Long id) {
-		Login login = loginrepo.findbyLoginId(id);
-		if (login == null)
-			throw new NotFoundException("No user found");
-		return login;
-	}
+//	private Login getLoginWithId(Long id) {
+	// Login login = loginrepo.findbyloginid(id);
+	// if (login == null) {
+//			throw new NotFoundException("No user found");
+	// }
+//		return login;
+//	}
 
 	@Transactional
-	public String CreateUser(LoginCreation logincreation) {
-		Login login = loginrepo.findByUserName(logincreation.getUsername());
+	public String CreateLogin(LoginCreation logincreation) {
+		Login login = loginrepo.findByusername(logincreation.getUsername());
 		if (login != null) {
 			throw new AlreadyExistException(logincreation.getUsername() + "already exists");
 		}
@@ -38,6 +40,7 @@ public class LoginService {
 			Login newlogin = new Login();
 			newlogin.setUsername(logincreation.getUsername());
 			newlogin.setPassword(logincreation.getPassword());
+			loginrepo.save(newlogin);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -46,12 +49,12 @@ public class LoginService {
 
 	@Transactional
 	public String deleteLogin(Long loginid) {
-		Login login = loginrepo.findbyLoginId(loginid);
-		if (login == null) {
+		Optional<Login> login = loginrepo.findById(loginid);
+		if (login.isEmpty()) {
 			throw new NotFoundException("User not Found to delete");
 		}
 		try {
-			loginrepo.delete(login);
+			loginrepo.deleteById(loginid);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -60,8 +63,11 @@ public class LoginService {
 	}
 
 	@Transactional
-	public String updateLogin(Long loginid, LoginCreation logincreation) {
-		Login login = getLoginWithId(loginid);
+	public String updateLogin(String loginname, LoginCreation logincreation) {
+		Login login = loginrepo.findByusername(loginname);
+		if(login == null) {
+			throw new NotFoundException("No Login found to update");
+		}
 		try {
 			login.setUsername(logincreation.getUsername());
 			login.setPassword(logincreation.getPassword());
@@ -78,7 +84,7 @@ public class LoginService {
 		List<Login> loginlist = loginrepo.findAll();
 		loginlist.stream().forEach(u -> {
 			LoginResponse loginresponse = new LoginResponse();
-			loginresponse.setLoginid(u.getloginid());
+			loginresponse.setLoginid(u.getid());
 			loginresponse.setUsername(u.getUsername());
 			loginresponse.setPassword(u.getPassword());
 			loginres.add(loginresponse);

@@ -11,8 +11,8 @@ public class Users {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "userid", unique = true, nullable = false)
-	private Long userid;
+	@Column(name = "id", unique = true, nullable = false)
+	private Long id;
 	
 	@Column(name = "firstname", nullable = false)
 	private String frstname;
@@ -34,11 +34,11 @@ public class Users {
 	}
 	
 	public Long getId() {
-		return userid;
+		return id;
 	}
 
 	public void setId(Long id) {
-		this.userid = id;
+		this.id = id;
 	}
 
 	public String getFrstname() {

@@ -8,6 +8,6 @@ import com.project.Crud.demo.model.Login;
 @Repository
 public interface LoginRepository extends JpaRepository<Login, Long>{
 
-	Login findByUserName(String username);
-	Login findbyLoginId(Long loginid);
+	Login findByusername(String username);
+	//Login findbyloginid(Long loginid);
 }

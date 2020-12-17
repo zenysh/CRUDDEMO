@@ -2,7 +2,7 @@ package com.project.Crud.demo.response;
 
 public class ProductResponse {
 
-	private Long productid;
+	private Long id;
 
 	private String name;
 
@@ -17,11 +17,11 @@ public class ProductResponse {
 	private String picture3;
 
 	public Long getProductid() {
-		return productid;
+		return id;
 	}
 
-	public void setProductid(Long productid) {
-		this.productid = productid;
+	public void setProductid(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

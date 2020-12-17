@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.project.Crud.demo.exception.AlreadyExistException;
 import com.project.Crud.demo.exception.NotFoundException;
@@ -15,6 +16,7 @@ import com.project.Crud.demo.repository.UserRepository;
 import com.project.Crud.demo.request.UserCreation;
 import com.project.Crud.demo.response.UserResponse;
 
+@Service
 public class UserService {
 
 	@Autowired
@@ -24,16 +26,16 @@ public class UserService {
 		return userrepo.findById(id);
 	}
 
-	private Users isExists(Long id) {
-		Users user = userrepo.findByUserId(id);
-		if (user == null)
-			throw new NotFoundException("No user found");
-		return user;
-	}
+	// private Users isExists(Long id) {
+	// Users user = userrepo.findByUserId(id);
+	// if (user == null)
+	// throw new NotFoundException("No user found");
+	// return user;
+	// }
 
 	@Transactional
-	public String CreateUser(Long userid, UserCreation ucreation) {
-		Users users = userrepo.findByFirstName(ucreation.getFrstname());
+	public String CreateUser( UserCreation ucreation) {
+		Users users = userrepo.findByfrstname(ucreation.getFrstname());
 		if (users != null) {
 			throw new AlreadyExistException(ucreation.getFrstname() + "already exists");
 		}
@@ -53,12 +55,12 @@ public class UserService {
 
 	@Transactional
 	public String deleteUser(Long userid) {
-		Users users = userrepo.findByUserId(userid);
-		if (users == null) {
+		Optional<Users> users = userrepo.findById(userid);
+		if (users.isEmpty()) {
 			throw new NotFoundException("User not Found to delete");
 		}
 		try {
-			userrepo.delete(users);
+			userrepo.deleteById(userid);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -66,8 +68,8 @@ public class UserService {
 	}
 
 	@Transactional
-	public String updateUser(Long userid, UserCreation usercreation) {
-		Users user = isExists(userid);
+	public String updateUser(String frstname, UserCreation usercreation) {
+		Users user = userrepo.findByfrstname(frstname);
 		try {
 			user.setFrstname(usercreation.getFrstname());
 			user.setLstname(usercreation.getLstname());

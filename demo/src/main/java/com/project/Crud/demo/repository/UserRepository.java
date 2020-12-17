@@ -5,6 +5,6 @@ import com.project.Crud.demo.model.Users;
 
 public interface UserRepository  extends JpaRepository<Users, Long>{
 
-	Users findByFirstName(String firsname);
-    Users findByUserId(Long id);
+	Users findByfrstname(String firsname);
+   // Users findByUserId(Long id);
 }

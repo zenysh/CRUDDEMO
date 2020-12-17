@@ -8,7 +8,7 @@ import com.project.Crud.demo.model.Product;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	Product findByProductid(Long id);
+	//Product findByProductid(Long id);
 
-	Product findByName(String name);
+	Product findByname(String name);
 }

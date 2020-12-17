@@ -10,7 +10,7 @@ public class Login {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long loginid;
+	private Long id;
 
 	private String username;
 
@@ -20,12 +20,12 @@ public class Login {
 
 	}
 
-	public Long getloginid() {
-		return loginid;
+	public Long getid() {
+		return id;
 	}
 
-	public void setloginid(Long loginid) {
-		this.loginid = loginid;
+	public void setid(Long id) {
+		this.id = id;
 	}
 
 	/*

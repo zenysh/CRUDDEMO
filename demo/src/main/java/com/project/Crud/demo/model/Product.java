@@ -12,8 +12,8 @@ public class Product {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "productid", unique = true, nullable = false)
-	private Long productid;
+	@Column(name = "id", unique = true, nullable = false)
+	private Long id;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -46,12 +46,12 @@ public class Product {
 	/** The category. */
 	// @ManyToOne // private Category category;
 
-	public Long getproductid() {
-		return productid;
+	public Long getid() {
+		return id;
 	}
 
-	public void setproductid(Long productid) {
-		this.productid = productid;
+	public void setid(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

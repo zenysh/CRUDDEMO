@@ -24,14 +24,14 @@ public class ProductController {
 	private ProductService productservice;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> CreateProduct(@RequestHeader Long productid,
+	public ResponseEntity<Object> CreateProduct(
 			@RequestBody ProductCreation productcreation) {
-		String product = productservice.CreateProduct(productid, productcreation);
+		String product = productservice.CreateProduct(productcreation);
 		return new ResponseEntity<Object>(product, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "deleteproduct/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteProduct(@PathVariable Long productid) {
+	public ResponseEntity<Object> deleteProduct(@PathVariable(value = "id")  Long productid) {
 		productservice.deleteProduct(productid);
 		return new ResponseEntity<Object>("Successfully Deleted", HttpStatus.OK);
 	}
@@ -42,9 +42,9 @@ public class ProductController {
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/editproduct/{productid}",method = RequestMethod.PUT)
-	public ResponseEntity<Object> editUser(@RequestHeader Long productid, @RequestBody ProductCreation productcreation) {
-		productservice.updateProduct(productid, productcreation);
+	@RequestMapping(value = "/editproduct",method = RequestMethod.PUT)
+	public ResponseEntity<Object> editUser(@RequestHeader String Firstname, @RequestBody ProductCreation productcreation) {
+		productservice.updateProduct(Firstname, productcreation);
 		return new ResponseEntity<Object>("Successfully Edited", HttpStatus.OK);
 	}
 

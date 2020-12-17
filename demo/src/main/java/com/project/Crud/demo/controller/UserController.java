@@ -23,26 +23,26 @@ public class UserController {
 	private UserService userservice;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> createUser(@RequestHeader Long userId, @RequestBody UserCreation userCreation) {
-		String user = userservice.CreateUser(userId, userCreation);
+	public ResponseEntity<Object> createUser(@RequestBody UserCreation userCreation) {
+		String user = userservice.CreateUser( userCreation);
 		return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "deleteuser/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteUser(@RequestHeader Long userId, @PathVariable Long id) {
+	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id")  Long userId) {
 		userservice.deleteUser(userId);
 		return new ResponseEntity<Object>("Successfully Deleted", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/getalluser",method = RequestMethod.GET)
+	@RequestMapping(value = "/getalluser", method = RequestMethod.GET)
 	public ResponseEntity<Object> getUser() {
 		List<UserResponse> response = userservice.getAllUsers();
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/edituser/{userId}",method = RequestMethod.PUT)
-	public ResponseEntity<Object> editUser(@RequestHeader Long userId, @RequestBody UserCreation usercreation) {
-		userservice.updateUser(userId, usercreation);
+	@RequestMapping(value = "/edituser", method = RequestMethod.PUT)
+	public ResponseEntity<Object> editUser(@RequestHeader String Firstname, @RequestBody UserCreation usercreation) {
+		userservice.updateUser(Firstname, usercreation);
 		return new ResponseEntity<Object>("Successfully Edited", HttpStatus.OK);
 	}
 
