@@ -1,5 +1,6 @@
 package com.project.Crud.demo.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,23 +10,25 @@ import javax.persistence.Id;
 public class Login {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long loginid;
+	
+	@Column(name = "username", unique = true, nullable = false)
 	private String username;
-
+	
+	@Column(name = "password", unique = true, nullable = false)
 	private String password;
+
+	public Long getLoginid() {
+		return loginid;
+	}
+
+	public void setLoginid(Long loginid) {
+		this.loginid = loginid;
+	}
 
 	public Login() {
 
-	}
-
-	public Long getid() {
-		return id;
-	}
-
-	public void setid(Long id) {
-		this.id = id;
 	}
 
 	/*

@@ -1,38 +1,31 @@
-
 package com.project.Crud.demo.model;
 
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 @Entity
-public class Product {
+public class Featured_items {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id", unique = true, nullable = false)
-	private Long id;
+	private Long featureid;
 
-	public Long getId() {
-		return id;
-	}
+	@Column(name = "Categoryid", nullable = false)
+	private Long Categoryid;
+	
+	@Column(name = "Productid", nullable = false)
+	private Long Productid;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	@Column(name = "CategoryName", nullable = false)
+	private String CategoryName;
 
 	@Column(name = "name", nullable = false)
 	private String name;
-
-	/** The description. */
-
 
 	@Column(name = "description")
 	private String description;
@@ -40,52 +33,49 @@ public class Product {
 	@Column(name = "dateAdded")
 	private Date dateadded;
 
-	public Date getDateadded() {
-		return dateadded;
-	}
-
-	public void setDateadded(Date dateadded) {
-		this.dateadded = dateadded;
-	}
-
-	@Column(name = "price", nullable = false)
-	private double price;
-
-	/** The pictures. */
-
 	@Column(name = "picture1")
 	private String picture1;
-
-	/** The pictures. */
 
 	@Column(name = "picture2")
 	private String picture2;
 
-	/** The pictures. */
-
 	@Column(name = "picture3")
 	private String picture3;
 
-	/** The category. */
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "Categoryid")
-	private Category category;
+	public Featured_items() {
 
-	
-	public Category getCategory() {
-		return category;
 	}
 
-	public void setCategory(Category category) {
-		this.category = category;
+	public Long getFeatureid() {
+		return featureid;
 	}
 
-	public Long getid() {
-		return id;
+	public void setFeatureid(Long featureid) {
+		this.featureid = featureid;
 	}
 
-	public void setid(Long id) {
-		this.id = id;
+	public Long getCategoryid() {
+		return Categoryid;
+	}
+
+	public void setCategoryid(Long categoryid2) {
+		Categoryid = categoryid2;
+	}
+
+	public Long getProductid() {
+		return Productid;
+	}
+
+	public void setProductid(Long productid) {
+		Productid = productid;
+	}
+
+	public String getCategoryName() {
+		return CategoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		CategoryName = categoryName;
 	}
 
 	public String getName() {
@@ -104,12 +94,12 @@ public class Product {
 		this.description = description;
 	}
 
-	public double getPrice() {
-		return price;
+	public Date getDateadded() {
+		return dateadded;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setDateadded(Date dateadded) {
+		this.dateadded = dateadded;
 	}
 
 	public String getPicture1() {

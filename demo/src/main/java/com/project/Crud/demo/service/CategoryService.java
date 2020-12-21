@@ -85,6 +85,7 @@ public class CategoryService {
 			CategoryResponse cRes = new CategoryResponse();
 			cRes.setName(u.getName());
 			cRes.setPicture(u.getPicture());
+			cRes.setCategoryid(u.getId());
 			catRes.add(cRes);
 		});
 		return catRes;

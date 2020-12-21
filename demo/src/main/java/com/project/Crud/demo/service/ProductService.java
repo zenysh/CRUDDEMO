@@ -1,6 +1,7 @@
 package com.project.Crud.demo.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 
 import com.project.Crud.demo.exception.AlreadyExistException;
 import com.project.Crud.demo.exception.NotFoundException;
+import com.project.Crud.demo.model.Category;
 import com.project.Crud.demo.model.Product;
+import com.project.Crud.demo.repository.CategoryRespository;
 import com.project.Crud.demo.repository.ProductRepository;
 import com.project.Crud.demo.response.ProductResponse;
 import com.project.Crud.demo.request.ProductCreation;
@@ -21,6 +24,9 @@ public class ProductService {
 
 	@Autowired
 	ProductRepository productrepo;
+	
+	@Autowired
+	CategoryRespository categoryrepo;
 
 	// private Product getProductWithId(Long id) {
 //		Product product = productrepo.findByProductid(id);
@@ -30,12 +36,15 @@ public class ProductService {
 //	}
 
 	@Transactional
-	public String CreateProduct(ProductCreation productcreation) {
+	public String CreateProduct(String Category,ProductCreation productcreation) {
 		Product product = productrepo.findByname(productcreation.getName());
+		Category cat = categoryrepo.findByName(Category);
 		if (product != null) {
 			throw new AlreadyExistException(productcreation.getName() + "already exists");
 		}
 		try {
+
+			System.out.print(cat.getName());
 			Product products = new Product();
 			products.setName(productcreation.getName());
 			products.setPicture1(productcreation.getPicture1());
@@ -43,6 +52,8 @@ public class ProductService {
 			products.setPicture3(productcreation.getPicture3());
 			products.setDescription(productcreation.getDescription());
 			products.setPrice(productcreation.getPrice());
+			products.setDateadded(new Date());
+			products.setCategory(cat);
 			productrepo.save(products);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -93,6 +104,7 @@ public class ProductService {
 		List<Product> productlist = productrepo.findAll();
 		productlist.stream().forEach(u -> {
 			ProductResponse pr = new ProductResponse();
+			pr.setCategoryid(u.getCategory().getId());
 			pr.setName(u.getName());
 			pr.setPicture1(u.getPicture1());
 			pr.setPicture2(u.getPicture2());
@@ -100,9 +112,30 @@ public class ProductService {
 			pr.setDescription(u.getDescription());
 			pr.setPrice(u.getPrice());
 			pr.setProductid(u.getid());
+			pr.setDateAdded(u.getDateadded());
 			prores.add(pr);
 		});
 		return prores;
 
+	}
+	
+	@Transactional
+	public List<ProductResponse>getproductbyid(Long productid){
+		List<ProductResponse> prores = new ArrayList<ProductResponse>();
+		Optional<Product> productlist = productrepo.findById(productid);
+		productlist.stream().forEach(u -> {
+			ProductResponse pr = new ProductResponse();
+			pr.setCategoryid(u.getCategory().getId());
+			pr.setProductid(u.getId());
+			pr.setName(u.getName());
+			pr.setDescription(u.getDescription());
+			pr.setDateAdded(u.getDateadded());
+			pr.setPicture1(u.getPicture1());
+			pr.setPicture2(u.getPicture2());
+			pr.setPicture3(u.getPicture3());
+			pr.setPrice(u.getPrice());
+			prores.add(pr);
+		});
+		return prores;
 	}
 }

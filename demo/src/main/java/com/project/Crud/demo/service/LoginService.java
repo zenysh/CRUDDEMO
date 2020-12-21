@@ -84,7 +84,7 @@ public class LoginService {
 		List<Login> loginlist = loginrepo.findAll();
 		loginlist.stream().forEach(u -> {
 			LoginResponse loginresponse = new LoginResponse();
-			loginresponse.setLoginid(u.getid());
+			loginresponse.setLoginid(u.getLoginid());
 			loginresponse.setUsername(u.getUsername());
 			loginresponse.setPassword(u.getPassword());
 			loginres.add(loginresponse);

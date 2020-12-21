@@ -23,7 +23,7 @@ import com.project.Crud.demo.service.CategoryService;
 
 @RestController
 
-@RequestMapping("rest/controller")
+@RequestMapping("rest/Category")
 public class CategoryController {
 
 	@Autowired

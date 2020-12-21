@@ -22,7 +22,7 @@ public class LoginController {
 	@Autowired
 	private LoginService loginservice;
 
-	@RequestMapping(value ="/createuser",method = RequestMethod.POST)
+	@RequestMapping(value ="/createlogin",method = RequestMethod.POST)
 	public ResponseEntity<Object> CreateLogin(@RequestBody LoginCreation logincreation) {
 		String login = loginservice.CreateLogin(logincreation);
 		return new ResponseEntity<Object>(login, HttpStatus.CREATED);
@@ -34,7 +34,7 @@ public class LoginController {
 		return new ResponseEntity<Object>("Successfully Deleted", HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/getAllproductLogin", method = RequestMethod.GET)
+	@RequestMapping(value = "/getAllLogin", method = RequestMethod.GET)
 	public ResponseEntity<Object> getUser() {
 		List<LoginResponse> response = loginservice.getAllLogin();
 		return new ResponseEntity<Object>(response, HttpStatus.OK);

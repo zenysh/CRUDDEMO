@@ -1,49 +1,53 @@
-package com.project.Crud.demo.response;
+package com.project.Crud.demo.request;
 
 import java.util.Date;
 
-public class ProductResponse {
 
-	private Long id;
+public class FeatureCreation {
+	private String CategoryName;
 
 	private String name;
 
 	private String description;
 
-	private double price;
+	private Date dateadded;
 
 	private String picture1;
 
 	private String picture2;
 
 	private String picture3;
-	
-	private Long categoryid;
+
+	public String getCategoryname() {
+		return Categoryname;
+	}
+
+	public void setCategoryname(String categoryname) {
+		Categoryname = categoryname;
+	}
+
+	public Long getProductid() {
+		return productid;
+	}
+
+	public void setProductid(Long productid) {
+		this.productid = productid;
+	}
 
 	public Long getCategoryid() {
-		return categoryid;
+		return Categoryid;
 	}
 
 	public void setCategoryid(Long categoryid) {
-		this.categoryid = categoryid;
+		Categoryid = categoryid;
 	}
 
-	public Date getDateAdded() {
-		return dateAdded;
+	public String getCategoryName() {
+		return CategoryName;
 	}
 
-	public void setDateAdded(Date dateAdded) {
-		this.dateAdded = dateAdded;
-	}
-
-	private Date dateAdded;
-
-	public Long getProductid() {
-		return id;
-	}
-
-	public void setProductid(Long id) {
-		this.id = id;
+	public void setCategoryName(String categoryName) {
+		CategoryName = categoryName;
 	}
 
 	public String getName() {
@@ -62,12 +66,12 @@ public class ProductResponse {
 		this.description = description;
 	}
 
-	public double getPrice() {
-		return price;
+	public Date getDateadded() {
+		return dateadded;
 	}
 
-	public void setPrice(double price) {
-		this.price = price;
+	public void setDateadded(Date dateadded) {
+		this.dateadded = dateadded;
 	}
 
 	public String getPicture1() {
@@ -93,5 +97,11 @@ public class ProductResponse {
 	public void setPicture3(String picture3) {
 		this.picture3 = picture3;
 	}
+
+	private String Categoryname;
+
+	private Long productid;
+
+	private Long Categoryid;
 
 }

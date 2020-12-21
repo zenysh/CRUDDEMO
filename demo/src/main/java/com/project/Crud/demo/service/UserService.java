@@ -94,6 +94,7 @@ public class UserService {
 			Uresponse.setAddress(u.getAddress());
 			Uresponse.setContact(u.getContact());
 			Uresponse.setEmail(u.getEmail());
+			Uresponse.setId(u.getId());
 			UserRes.add(Uresponse);
 		});
 		return UserRes;
