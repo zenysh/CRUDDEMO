@@ -31,7 +31,7 @@ public class AddRoleController {
 	@Autowired
 	AddRolesRepository addrolerepo;
 	
-	@RolesAllowed("ADMIN")
+//	@RolesAllowed("ADMIN")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Object> createUser(@RequestBody RoleCreation RC) {
 		String Roles = addroleservice.addRole(RC);

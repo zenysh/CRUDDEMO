@@ -56,11 +56,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// dont authenticate this particular request
 				.authorizeRequests().antMatchers("/authenticate").permitAll()
-				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**","/swagger-resources/configuration/ui","/swagger-ui.html").permitAll()
-				.antMatchers(HttpMethod.PUT, "/rest/users")
-				.permitAll().
+				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
+						"/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagger-ui.html")
+				.permitAll().antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
+				.antMatchers(HttpMethod.POST, "/rest/Users/**").hasRole("ADMIN")
+				.antMatchers(HttpMethod.POST, "/rest/login/*").permitAll()
+				.antMatchers(HttpMethod.POST,"/rest/assignRole/**").permitAll()
+				.antMatchers(HttpMethod.POST,"/rest/addrole/**").permitAll()
 				// all other requests need to be authenticated
-				anyRequest().authenticated().and().
+				.anyRequest().authenticated().and().
 				// make sure we use stateless session; session won't be used to
 				// store user's state.
 				exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()

@@ -1,7 +1,5 @@
 package com.project.Crud.demo.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +24,11 @@ public class AssignRoleService {
 	@Autowired
 	AsignRoleRepository assignrolerepo;
 
-	public String assignRole(Long loginid, String Role) {
+	public String assignRole(String username, String Role) {
 		try {
 			// Optional<Login> login = loginrepo.findById(loginid);
 			Login_roles lr = new Login_roles();
-			lr.setLogin(loginrepo.findById(loginid).get());
+			lr.setUsername(loginrepo.findByusername(username).getUsername());
 			lr.setRolename(addrolerepo.findByrolename(Role).getRole_name());
 			loginrolerepo.save(lr);
 		} catch (Exception ex) {

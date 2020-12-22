@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.Crud.demo.service.AssignRoleService;
 
@@ -19,9 +20,9 @@ public class AssignRoleController {
 	AssignRoleService assignroleservice;
 
 	@RolesAllowed("ADMIN")
-	@RequestMapping(value = "assignrole/{loginid}/{rolename}",method=RequestMethod.POST)
-	public ResponseEntity<Object> AssignRole(@PathVariable(value = "loginid") Long loginid, @PathVariable(value = "rolename") String rolename) {
-	String assignrole = assignroleservice.assignRole(loginid, rolename);
+	@RequestMapping(value = "assignrole",method=RequestMethod.POST)
+	public ResponseEntity<Object> AssignRole(@RequestParam (value = "username") String username, @RequestParam(value = "rolename") String rolename) {
+	String assignrole = assignroleservice.assignRole(username, rolename);
 	return new ResponseEntity<Object>(assignrole, HttpStatus.CREATED);
 	
 	}

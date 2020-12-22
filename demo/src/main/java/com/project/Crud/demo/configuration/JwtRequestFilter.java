@@ -15,6 +15,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
+
 //import io.jsonwebtoken.ExpiredJwtException;
 
 @Component
@@ -41,7 +44,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				System.out.println("Unable to get JWT Token");
+				logger.error("An error occurred while fetching Username from Token", e);
+			} catch (ExpiredJwtException e) {
+				logger.warn("The token has expired", e);
+			} catch (SignatureException e) {
+				logger.error("Authentication Failed. Username or Password not valid.");
 			} /*
 				 * catch (ExpiredJwtException e) { System.out.println("JWT Token has expired");
 				 * }

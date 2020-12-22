@@ -23,13 +23,14 @@ public class UserController {
 	private UserService userservice;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> createUser(@RequestBody UserCreation userCreation) {
-		String user = userservice.CreateUser( userCreation);
+	public ResponseEntity<Object> createUser(@RequestHeader String authorization,
+			@RequestBody UserCreation userCreation) {
+		String user = userservice.CreateUser(userCreation);
 		return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "deleteuser/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id")  Long userId) {
+	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Long userId) {
 		userservice.deleteUser(userId);
 		return new ResponseEntity<Object>("Successfully Deleted", HttpStatus.OK);
 	}

@@ -13,10 +13,18 @@ public class Login_roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String rolename;
 
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "loginid")
-	private Login login;
+	private String username;
+
+	public String getUsername() {
+	return username;
+}
+
+public void setUsername(String username) {
+	this.username = username;
+}
 
 	public String getRolename() {
 		return rolename;
@@ -26,7 +34,7 @@ public class Login_roles {
 		this.rolename = rolename;
 	}
 
-	private String rolename;
+
 
 	public Login_roles() {
 
@@ -41,13 +49,7 @@ public class Login_roles {
 		this.id = id;
 	}
 
-	public Login getLogin() {
-		return login;
-	}
 
-	public void setLogin(Login login) {
-		this.login = login;
-	}
 
 
 }

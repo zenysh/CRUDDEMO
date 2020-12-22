@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.project.Crud.demo.exception.AlreadyExistException;
@@ -21,6 +22,9 @@ public class LoginService {
 
 	@Autowired
 	LoginRepository loginrepo;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptEncoder;
 
 //	private Login getLoginWithId(Long id) {
 	// Login login = loginrepo.findbyloginid(id);
@@ -39,7 +43,7 @@ public class LoginService {
 		try {
 			Login newlogin = new Login();
 			newlogin.setUsername(logincreation.getUsername());
-			newlogin.setPassword(logincreation.getPassword());
+			newlogin.setPassword((bcryptEncoder.encode(logincreation.getPassword())));
 			loginrepo.save(newlogin);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());

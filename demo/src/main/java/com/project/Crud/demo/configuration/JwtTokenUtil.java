@@ -5,9 +5,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import com.project.Crud.demo.model.Login_roles;
+import com.project.Crud.demo.repository.LoginRolesRepository;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -19,6 +25,9 @@ public class JwtTokenUtil implements Serializable {
 	private static final long serialVersionUID = -2550185165626007488L;
 
 	public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+	
+	@Autowired
+	LoginRolesRepository loginrepo;
 
 	// @Value("${jwt.secret}")
 	private String secret = "JWTTOKEN$#CR#T@2090";
@@ -62,8 +71,10 @@ public class JwtTokenUtil implements Serializable {
 	// Serialization(https://tools.ietf.org/html/draft-ietf-jose-json-web-signature-41#section-3.1)
 	// compaction of the JWT to a URL-safe string
 	private String doGenerateToken(Map<String, Object> claims, String subject)/* Username */ {
-
+		
+	//	Login_roles role = loginrepo.findByusername(subject);
 		return Jwts.builder().setClaims(claims).setSubject(subject)
+				//.claim("role", role.getRolename())
 				// .claim("Roles", roles.getRoles()) //with this we can include object or string
 				// in JWT TOKEN
 				// .setId(Login.getId().toString()).claim("something",Object)
@@ -77,4 +88,21 @@ public class JwtTokenUtil implements Serializable {
 		final String username = getUsernameFromToken(token);
 		return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
 	}
+
+	/*UsernamePasswordAuthenticationToken getAuthenticationToken(final String token, final Authentication existingAuth,
+			final UserDetails userDetails) {
+
+		final JwtParser jwtParser = Jwts.parser().setSigningKey(secret);
+
+		final Jws<Claims> claimsJws = jwtParser.parseClaimsJws(token);
+
+		final Claims claims = claimsJws.getBody();
+
+	final Collection<? extends GrantedAuthority> authorities = Arrays
+			.stream(claims.get(AUTHORITIES_KEY).toString().split(",")).map(SimpleGrantedAuthority::new)
+				.collect(Collectors.toList());
+
+		return new UsernamePasswordAuthenticationToken(userDetails, "", authorities);
+	}
+	*/
 }
