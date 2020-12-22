@@ -35,7 +35,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/getalluser", method = RequestMethod.GET)
-	public ResponseEntity<Object> getUser() {
+	public ResponseEntity<Object> getUser(@RequestHeader String authorization) {
 		List<UserResponse> response = userservice.getAllUsers();
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
