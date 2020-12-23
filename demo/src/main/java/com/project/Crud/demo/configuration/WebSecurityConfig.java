@@ -58,9 +58,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests().antMatchers("/authenticate").permitAll()
 				.antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources", "/configuration/security",
 						"/swagger-ui.html", "/webjars/**", "/swagger-resources/configuration/ui", "/swagger-ui.html")
-				.permitAll().antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
+				.permitAll()
+				.antMatchers(HttpMethod.POST, "/rest/Category").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.PUT, "/rest/Category").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.DELETE, "/rest/Category/deletecategory/{id}").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.GET, "/rest/Category/getallcategory").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.POST, "/rest/Category/editCategory").hasAuthority("ADMIN")
+				
+				.antMatchers(HttpMethod.POST, "/rest/product/createProduct").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.GET, "/rest/product/getAllproduct").hasAnyAuthority("ADMIN","USER")
+				.antMatchers(HttpMethod.DELETE, "/rest/product/deletecategory/{id}").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.GET, "/rest/product/getProductByname").hasAnyAuthority("ADMIN","USER")
+				.antMatchers(HttpMethod.POST, "/rest/product/editproduct").hasAuthority("ADMIN")
+				
+				.antMatchers(HttpMethod.POST, "/rest/addrole/").hasAuthority("ADMIN")
+				.antMatchers(HttpMethod.DELETE, "/rest/addrole/deleterole/{roleid}").hasAuthority("ADMIN")
+				
+				.antMatchers(HttpMethod.POST, "/rest/assignRole/assignrole").hasAuthority("ADMIN")
+				
+				
+				
+				.antMatchers(HttpMethod.PUT, "/rest/users").permitAll()
 				.antMatchers(HttpMethod.POST, "/rest/Users").permitAll()
-				.antMatchers(HttpMethod.POST, "/rest/Category").permitAll()
+
 				.antMatchers(HttpMethod.POST, "/rest/login/*").permitAll()
 				.antMatchers(HttpMethod.POST,"/rest/assignRole/**").permitAll()
 				.antMatchers(HttpMethod.POST,"/rest/addrole/**").permitAll()

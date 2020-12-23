@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.Crud.demo.exception.NotFoundException;
@@ -33,13 +34,15 @@ public class CategoryController {
 	CategoryRespository categoryrepo;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> createUser(@RequestBody CategoryCreation userCreation) {
+	public ResponseEntity<Object> createUser(@RequestHeader String authorization,
+			@RequestBody CategoryCreation userCreation) {
 		String category = categoryservice.CreateCategory(userCreation);
 		return new ResponseEntity<Object>(category, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "deletecategory/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Object> deleteUser(@PathVariable(value = "id") Long categoryid) throws NotFoundException {
+	public ResponseEntity<Object> deleteUser(@RequestHeader String authorization,
+			@PathVariable(value = "id") Long categoryid) throws NotFoundException {
 		Optional<Category> category = categoryrepo.findById(categoryid);
 		if (category.isEmpty()) {
 			throw new NotFoundException("id not found");
@@ -56,7 +59,7 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/editCategory", method = RequestMethod.PUT)
-	public ResponseEntity<Object> editUser(@RequestHeader String categoryName,
+	public ResponseEntity<Object> editUser(@RequestHeader String authorization, @RequestParam String categoryName,
 			@RequestBody CategoryCreation userCreation) {
 		categoryservice.updateCategory(categoryName, userCreation);
 		return new ResponseEntity<Object>("Successfully Edited", HttpStatus.OK);

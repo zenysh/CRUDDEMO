@@ -24,7 +24,7 @@ public class ProductService {
 
 	@Autowired
 	ProductRepository productrepo;
-	
+
 	@Autowired
 	CategoryRespository categoryrepo;
 
@@ -36,7 +36,7 @@ public class ProductService {
 //	}
 
 	@Transactional
-	public String CreateProduct(String Category,ProductCreation productcreation) {
+	public String CreateProduct(String Category, ProductCreation productcreation) {
 		Product product = productrepo.findByname(productcreation.getName());
 		Category cat = categoryrepo.findByName(Category);
 		if (product != null) {
@@ -118,9 +118,9 @@ public class ProductService {
 		return prores;
 
 	}
-	
+
 	@Transactional
-	public List<ProductResponse>getproductbyid(Long productid){
+	public List<ProductResponse> getproductbyid(Long productid) {
 		List<ProductResponse> prores = new ArrayList<ProductResponse>();
 		Optional<Product> productlist = productrepo.findById(productid);
 		productlist.stream().forEach(u -> {
@@ -136,6 +136,28 @@ public class ProductService {
 			pr.setPrice(u.getPrice());
 			prores.add(pr);
 		});
+		return prores;
+	}
+
+	@Transactional
+	public List<ProductResponse> getbyproductname(String productname) {
+		List<ProductResponse> prores = new ArrayList<ProductResponse>();
+		Product productlist = productrepo.findByname(productname);
+		if (productlist == null) {
+			throw new NotFoundException("Product you are searching  " + productname + " is not found");
+		} else {
+			ProductResponse pr = new ProductResponse();
+			pr.setCategoryid(productlist.getCategory().getId());
+			pr.setProductid(productlist.getId());
+			pr.setName(productlist.getName());
+			pr.setDescription(productlist.getDescription());
+			pr.setDateAdded(productlist.getDateadded());
+			pr.setPicture1(productlist.getPicture1());
+			pr.setPicture2(productlist.getPicture2());
+			pr.setPicture3(productlist.getPicture3());
+			pr.setPrice(productlist.getPrice());
+			prores.add(pr);
+		}
 		return prores;
 	}
 }

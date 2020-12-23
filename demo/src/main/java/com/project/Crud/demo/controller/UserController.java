@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.project.Crud.demo.request.UserCreation;
 import com.project.Crud.demo.response.UserResponse;
@@ -41,7 +42,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/edituser", method = RequestMethod.PUT)
-	public ResponseEntity<Object> editUser(@RequestHeader String Firstname, @RequestBody UserCreation usercreation) {
+	public ResponseEntity<Object> editUser(@RequestParam String Firstname, @RequestBody UserCreation usercreation) {
 		userservice.updateUser(Firstname, usercreation);
 		return new ResponseEntity<Object>("Successfully Edited", HttpStatus.OK);
 	}
