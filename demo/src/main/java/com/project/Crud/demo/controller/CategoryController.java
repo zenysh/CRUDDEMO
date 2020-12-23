@@ -50,7 +50,7 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/getallcategory", method = RequestMethod.GET)
-	public ResponseEntity<Object> getUser() {
+	public ResponseEntity<Object> getUser(@RequestHeader String authorization) {
 		List<CategoryResponse> response = categoryservice.getallCategory();
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}

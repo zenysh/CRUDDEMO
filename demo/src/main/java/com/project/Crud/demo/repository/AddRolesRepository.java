@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.project.Crud.demo.model.Roles;
 
 public interface AddRolesRepository extends JpaRepository<Roles,Long>{
-	Roles findByrolename(String role);	
+	Roles findByrole(String role);	
 
 }

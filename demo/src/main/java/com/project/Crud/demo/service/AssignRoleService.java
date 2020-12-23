@@ -29,7 +29,7 @@ public class AssignRoleService {
 			// Optional<Login> login = loginrepo.findById(loginid);
 			Login_roles lr = new Login_roles();
 			lr.setUsername(loginrepo.findByusername(username).getUsername());
-			lr.setRolename(addrolerepo.findByrolename(Role).getRole_name());
+			lr.setRole(addrolerepo.findByrole(Role).getRole());
 			loginrolerepo.save(lr);
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());

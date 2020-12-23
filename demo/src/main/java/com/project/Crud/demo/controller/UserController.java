@@ -23,8 +23,7 @@ public class UserController {
 	private UserService userservice;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Object> createUser(@RequestHeader String authorization,
-			@RequestBody UserCreation userCreation) {
+	public ResponseEntity<Object> createUser(@RequestBody UserCreation userCreation) {
 		String user = userservice.CreateUser(userCreation);
 		return new ResponseEntity<Object>(user, HttpStatus.CREATED);
 	}

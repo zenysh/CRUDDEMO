@@ -19,7 +19,7 @@ public class AddRoles {
 	public String addRole(RoleCreation roleCr) {
 		try {
 			Roles role = new Roles();
-			role.setRole_name(roleCr.getRole_name());
+			role.setRole(roleCr.getRole_name());
 			addrolesrepo.save(role);
 		}catch(Exception ex) {
 			System.out.println(ex.getMessage());

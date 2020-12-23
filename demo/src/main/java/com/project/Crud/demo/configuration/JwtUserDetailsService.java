@@ -1,6 +1,7 @@
 package com.project.Crud.demo.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -28,13 +29,21 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	LoginRolesRepository loginrole;
+	
+	// for more than 1 authorities private List<GrantedAuthority> authorities;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// here we can use user repository to extract username and password
 		if (loginrepo.findByusername(username).getUsername().equals(username)) {
+			GrantedAuthority authority = new SimpleGrantedAuthority(loginrole.findByusername(username).getRole());
+			/*
+			 * [For more than 1 authorities ]   authorities =  Arrays.stream(loginrolerepo.findByusername(username).getRole().split(","))
+			 * .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+			 */
+			System.out.println("authority" + authority);
 			return new User(loginrepo.findByusername(username).getUsername(),
-					loginrepo.findByusername(username).getPassword(),getAuthority(loginrole.findByusername(username)));
+					loginrepo.findByusername(username).getPassword(),Arrays.asList(authority));
 			// return new User("javainuse",
 			// "$2a$10$slYQmyNdGzTn7ZLBXBChFOC9f6kFjAqPhccnP6DxlWXx2lPk1C3G6",
 			// new ArrayList<>());
@@ -42,9 +51,5 @@ public class JwtUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("User not found with username: " + username);
 		}
 	}
-	  private Set<SimpleGrantedAuthority> getAuthority(Login_roles loginroles) {
-	        Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-	            authorities.add(new SimpleGrantedAuthority("ROLE_" + loginroles.getRolename()));
-	        return authorities;
-	    }
+
 }
