@@ -55,6 +55,15 @@ public class ProductController {
 		popularService.AddPopularitems(productid);
 		return new ResponseEntity<Object>(response, HttpStatus.OK);
 	}
+	@RequestMapping(value = "/getProductByid/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Object> getprodusctbyid(@PathVariable(value = "id") Long productid) {
+		// should be added at get one product
+		// counter++ into database maybe
+		List<ProductResponse> response = productservice.getproductbyid(productid);
+		popularService.AddPopularitems(productid);
+		return new ResponseEntity<Object>(response, HttpStatus.OK);
+	}
+	//lkl
 
 	@RequestMapping(value = "/editproduct", method = RequestMethod.PUT)
 	public ResponseEntity<Object> editUser(@RequestHeader String Firstname,
